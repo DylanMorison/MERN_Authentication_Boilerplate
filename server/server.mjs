@@ -1,11 +1,13 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+import config from "config";
 import { authRouter } from "./routes/auth.mjs";
+import { connectDB } from "./config/db.mjs";
 
-dotenv.config();
+const NODE_ENV = config.get("NODE_ENV");
+
+connectDB();
 
 const app = express();
 
@@ -19,7 +21,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-if ((process.env.NODE_ENV = "development")) {
+if (NODE_ENV === "development") {
 	app.use(cors({ origin: `http://localhost:3000` }));
 }
 
@@ -29,5 +31,5 @@ app.use("/auth", authRouter);
 const PORT = process.env.port || 5000;
 
 app.listen(PORT, () => {
-	console.log(`Server is up on port ${PORT}! - ${process.env.NODE_ENV}`);
+	console.log(`Server is up on port ${PORT}! - ${NODE_ENV}`);
 });
