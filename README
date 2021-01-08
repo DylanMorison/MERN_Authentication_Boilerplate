@@ -2,4 +2,4 @@ This repo will contain authentication for MERN Stack projects.
 
 The finished product will allow developers to have a boilerplate for 
 constructing multi level authentication with GoogleAuth, FacebookAuth,
-and distinct user email password for the product.
+and distinct user email password combinations native to the web app.
