@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
 			unique: true,
 			lowercase: true
 		},
-		password: {
+		hashed_password: {
 			type: String,
 			required: true
 		},
@@ -60,7 +60,7 @@ userSchema.methods = {
 	encryptPassword: function (password) {
 		if (!password) return "";
 		try {
-			return crypto.createHmac("sha1", this.salt).update(password).digest("hex");
+			return crypto.createHmac("sha256", this.salt).update(password).digest("hex");
 		} catch (error) {
 			return "";
 		}
