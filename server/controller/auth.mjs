@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
 				return res.status(400).json({ error: "email is in use" });
 			} else {
 				const jwt_token = jwt.sign(
-					{ name, email, password },
+					{ name, email },
 					JWT_ACCOUNT_ACTIVATION,
 					{ expiresIn: "10min" }
 				);
@@ -53,7 +53,7 @@ export const accountActivation = async (req, res) => {
 
 	try {
 		if (token) {
-			jwt.verify(token, JWT_ACCOUNT_ACTIVATION, (err, decoded) => {
+			jwt.verify(token, JWT_ACCOUNT_ACTIVATION, async (err, decoded) => {
 				if (err) {
 					console.log("JWT VERIFY IN ACCOUNT ACTIVATION ERROR", err);
 					return res.status(401).json({ error: "Expired Link" });
